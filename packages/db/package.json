@@ -1,0 +1,27 @@
+{
+  "name": "@healer/db",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "scripts": {
+    "generate": "drizzle-kit generate",
+    "push": "drizzle-kit push",
+    "seed": "tsx src/seed.ts"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "better-auth": "^0.3.0",
+    "dotenv": "^16.4.5",
+    "drizzle-orm": "^0.33.0",
+    "postgres": "^3.4.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^3.0.0",
+    "@types/node": "^20.14.0",
+    "drizzle-kit": "^0.24.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.5.0"
+  }
+}
