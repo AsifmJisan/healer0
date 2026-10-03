@@ -24,6 +24,23 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
+  /* Doctor Dashboard Hospital Light Theme — explicit color families
+     Required because --color-*: initial strips all Tailwind defaults */
+  --color-white: #ffffff;
+  --color-slate-50: #f8fafc;
+  --color-slate-100: #f1f5f9;
+  --color-slate-200: #e2e8f0;
+  --color-slate-400: #94a3b8;
+  --color-slate-600: #475569;
+  --color-slate-700: #334155;
+  --color-slate-800: #1e293b;
+  --color-slate-900: #0f172a;
+  --color-teal-50: #f0fdfa;
+  --color-teal-200: #99f6e4;
+  --color-teal-600: #0d9488;
+  --color-teal-700: #0f766e;
+  --color-teal-800: #115e59;
+
   /* Radius Math */
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
@@ -121,3 +138,66 @@
   --primary-foreground: var(--destructive-foreground);
   --ring: var(--destructive);
 }
+
+@layer base {
+  /* Hospital Light Theme for Doctor Dashboard ONLY */
+  .doctor-theme,
+  .dark .doctor-theme,
+  html.dark .doctor-theme,
+  html.dark body .doctor-theme,
+  [data-theme='dark'] .doctor-theme {
+    --background: #f8fafc !important;
+    --foreground: #0f172a !important;
+    
+    --card: #ffffff !important;
+    --card-foreground: #0f172a !important;
+    
+    --popover: #ffffff !important;
+    --popover-foreground: #0f172a !important;
+    
+    --primary: #0d9488 !important;
+    --primary-foreground: #ffffff !important;
+    
+    --secondary: #f1f5f9 !important;
+    --secondary-foreground: #334155 !important;
+    
+    --muted: #f1f5f9 !important;
+    --muted-foreground: #64748b !important;
+    
+    --accent: #f0fdfa !important;
+    --accent-foreground: #0f766e !important;
+    
+    --destructive: #ef4444 !important;
+    --destructive-foreground: #ffffff !important;
+    
+    --border: #e2e8f0 !important;
+    --input: #e2e8f0 !important;
+    --ring: #0d9488 !important;
+
+    --color-background: #f8fafc !important;
+    --color-foreground: #0f172a !important;
+    --color-card: #ffffff !important;
+    --color-card-foreground: #0f172a !important;
+    --color-popover: #ffffff !important;
+    --color-popover-foreground: #0f172a !important;
+    --color-primary: #0d9488 !important;
+    --color-primary-foreground: #ffffff !important;
+    --color-secondary: #f1f5f9 !important;
+    --color-secondary-foreground: #334155 !important;
+    --color-muted: #f1f5f9 !important;
+    --color-muted-foreground: #64748b !important;
+    --color-accent: #f0fdfa !important;
+    --color-accent-foreground: #0f766e !important;
+    --color-destructive: #ef4444 !important;
+    --color-destructive-foreground: #ffffff !important;
+    --color-border: #e2e8f0 !important;
+    --color-input: #e2e8f0 !important;
+    --color-ring: #0d9488 !important;
+    
+    color: #0f172a !important;
+    background-color: #f8fafc !important;
+  }
+}
+
+
+
