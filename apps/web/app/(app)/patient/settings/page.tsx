@@ -4,13 +4,14 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiFetch } from "@/lib/api";
-import { Settings, User, Save, ShieldCheck, AlertTriangle } from "lucide-react";
+import { Settings, User, Save, ShieldCheck, AlertTriangle, FlaskConical, ArrowRight, CheckCircle2, Sparkles, BookOpen, Users as UsersIcon, BarChart3 } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { PrivacyView } from "@/components/features/privacy/privacy-view";
 import { EmergencyView } from "@/components/features/emergency/emergency-view";
+import { fetchResearchProfile, toggleResearcherMode } from "@/lib/api/research";
 
 interface AccountProfileResponse {
   user: {
@@ -40,7 +41,7 @@ interface UserPreferences {
   notificationEnabled: boolean;
 }
 
-type TabType = 'profile' | 'preferences' | 'privacy' | 'crisis';
+type TabType = 'profile' | 'preferences' | 'privacy' | 'crisis' | 'researcher';
 
 function PatientSettingsContent() {
   const queryClient = useQueryClient();
@@ -51,7 +52,7 @@ function PatientSettingsContent() {
   const [activeTab, setActiveTab] = useState<TabType>('profile');
 
   useEffect(() => {
-    if (tabParam === 'preferences' || tabParam === 'privacy' || tabParam === 'crisis' || tabParam === 'profile') {
+    if (tabParam === 'preferences' || tabParam === 'privacy' || tabParam === 'crisis' || tabParam === 'profile' || tabParam === 'researcher') {
       setActiveTab(tabParam as TabType);
     }
   }, [tabParam]);
@@ -80,6 +81,34 @@ function PatientSettingsContent() {
   const { data: preferences, isLoading: loadingPrefs } = useQuery<UserPreferences>({
     queryKey: ['account', 'preferences'],
     queryFn: () => apiFetch<UserPreferences>('/account/preferences'),
+  });
+
+  // Fetch researcher profile status
+  const { data: researcherProfile, isLoading: loadingResearcher } = useQuery({
+    queryKey: ['research', 'profile'],
+    queryFn: fetchResearchProfile,
+  });
+
+  // Researcher mode toggle mutation
+  const toggleResearcherMutation = useMutation({
+    mutationFn: (enable: boolean) => toggleResearcherMode(enable),
+    onSuccess: (res, variables) => {
+      queryClient.invalidateQueries({ queryKey: ['research', 'profile'] });
+      queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+      if (variables) {
+        toast.success("Researcher workspace enabled! You can now switch to the Researcher Dashboard using your profile icon.", {
+          action: {
+            label: "Go to Dashboard",
+            onClick: () => router.push('/researcher'),
+          },
+        });
+      } else {
+        toast.success("Researcher workspace disabled.");
+      }
+    },
+    onError: (err: any) => {
+      toast.error(err.message || "Failed to update researcher mode");
+    },
   });
 
   // Populate profile form when data arrives
@@ -202,6 +231,16 @@ function PatientSettingsContent() {
           }`}
         >
           <AlertTriangle className="w-4 h-4" /> Crisis Support
+        </button>
+        <button
+          onClick={() => handleTabChange('researcher')}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer ${
+            activeTab === 'researcher'
+              ? 'bg-indigo-600 text-white shadow-xs'
+              : 'text-muted-foreground hover:bg-muted'
+          }`}
+        >
+          <FlaskConical className="w-4 h-4" /> Researcher Workspace
         </button>
       </div>
 
@@ -376,6 +415,117 @@ function PatientSettingsContent() {
       {/* Crisis Support Tab */}
       {activeTab === 'crisis' && (
         <EmergencyView />
+      )}
+
+      {/* Researcher Workspace Tab */}
+      {activeTab === 'researcher' && (
+        <div className="space-y-6">
+          <Card className="border-indigo-100/80 shadow-xs">
+            <CardHeader className="border-b border-indigo-50/80 pb-5">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-200/60 shadow-2xs">
+                    <FlaskConical className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-xl font-bold text-zinc-900">Researcher Dashboard</CardTitle>
+                    <CardDescription className="text-xs text-zinc-500 mt-0.5">
+                      Enable clinical study hosting, psychometric survey design, and anonymized cohort analysis.
+                    </CardDescription>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  {researcherProfile ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200">
+                      <CheckCircle2 className="w-3.5 h-3.5" /> Active Researcher
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 text-zinc-600 border border-zinc-200">
+                      Not Activated
+                    </span>
+                  )}
+                </div>
+              </div>
+            </CardHeader>
+            <CardContent className="pt-6 space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="p-4 rounded-xl bg-indigo-50/40 border border-indigo-100/60 space-y-1.5">
+                  <div className="flex items-center gap-2 text-indigo-700 font-semibold text-xs">
+                    <BookOpen className="w-4 h-4" /> Clinical Studies
+                  </div>
+                  <p className="text-xs text-zinc-600 leading-relaxed">
+                    Launch multi-phase trials, specify inclusion criteria, and manage clinical protocol lifecycles.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-indigo-50/40 border border-indigo-100/60 space-y-1.5">
+                  <div className="flex items-center gap-2 text-indigo-700 font-semibold text-xs">
+                    <UsersIcon className="w-4 h-4" /> Cohort Anonymization
+                  </div>
+                  <p className="text-xs text-zinc-600 leading-relaxed">
+                    Recruit participants with pseudonymized ID codes and explicit digital informed consent tracking.
+                  </p>
+                </div>
+
+                <div className="p-4 rounded-xl bg-indigo-50/40 border border-indigo-100/60 space-y-1.5">
+                  <div className="flex items-center gap-2 text-indigo-700 font-semibold text-xs">
+                    <BarChart3 className="w-4 h-4" /> Statistical Insights
+                  </div>
+                  <p className="text-xs text-zinc-600 leading-relaxed">
+                    Automate biomarker trend analysis, response scoring, and machine learning model validation.
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-zinc-100 pt-5 flex items-center justify-between flex-wrap gap-4">
+                <div>
+                  <h4 className="text-sm font-semibold text-zinc-900">
+                    {researcherProfile ? 'Researcher Mode is Enabled' : 'Enable Researcher Dashboard'}
+                  </h4>
+                  <p className="text-xs text-zinc-500 mt-0.5">
+                    {researcherProfile 
+                      ? 'You have full access to the Researcher Dashboard. Switch to it anytime from your top profile avatar.'
+                      : 'Activating will automatically populate sample clinical studies, psychometric instruments, and cohort rows in PostgreSQL.'}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  {researcherProfile ? (
+                    <>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => toggleResearcherMutation.mutate(false)}
+                        disabled={toggleResearcherMutation.isPending}
+                        className="text-destructive hover:bg-destructive/10"
+                      >
+                        Deactivate Workspace
+                      </Button>
+                      <Button
+                        size="sm"
+                        onClick={() => router.push('/researcher')}
+                        className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs"
+                      >
+                        Open Researcher Dashboard <ArrowRight className="w-4 h-4 ml-1.5" />
+                      </Button>
+                    </>
+                  ) : (
+                    <Button
+                      size="sm"
+                      onClick={() => toggleResearcherMutation.mutate(true)}
+                      disabled={toggleResearcherMutation.isPending}
+                      className="bg-indigo-600 hover:bg-indigo-700 text-white shadow-xs"
+                    >
+                      <Sparkles className="w-4 h-4 mr-1.5" />
+                      {toggleResearcherMutation.isPending ? 'Activating...' : 'Activate Researcher Workspace'}
+                    </Button>
+                  )}
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
       )}
     </div>
   );

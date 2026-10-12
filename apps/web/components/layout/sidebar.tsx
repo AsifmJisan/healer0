@@ -6,7 +6,8 @@ import { cn } from "@/lib/utils";
 import { 
   Users, Activity, Calendar, FileText, Settings, ShieldAlert, BookOpen, ShieldCheck, HeartPulse,
   LayoutDashboard, MessageSquare, Pill, UserCheck, User,
-  Bot, Smile, Sparkles, ClipboardList, BookMarked, FolderHeart
+  Bot, Smile, Sparkles, ClipboardList, BookMarked, FolderHeart,
+  FlaskConical, BarChart3, Library
 } from "lucide-react";
 import { SidebarNavLink } from "./sidebar-nav-link";
 import { SidebarNavFolder, SidebarNavFolderChild } from "./sidebar-nav-folder";
@@ -77,10 +78,17 @@ export const getSidebarConfig = (role?: SystemRole | string): RoleSidebarConfig 
     case 'researcher':
       return {
         mainNav: [
-          { href: '/researcher', label: 'Overview', icon: <Activity className="w-4 h-4" /> },
-          { href: '/researcher/studies', label: 'Studies', icon: <BookOpen className="w-4 h-4" /> },
+          { href: '/researcher', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
+          { href: '/researcher/studies', label: 'Clinical Studies', icon: <FlaskConical className="w-4 h-4" /> },
+          { href: '/researcher/participants', label: 'Cohort Participants', icon: <Users className="w-4 h-4" /> },
+          { href: '/researcher/surveys', label: 'Surveys & Instruments', icon: <ClipboardList className="w-4 h-4" /> },
+          { href: '/researcher/analytics', label: 'Analytics & Insights', icon: <BarChart3 className="w-4 h-4" /> },
+          { href: '/researcher/papers', label: 'Literature Library', icon: <Library className="w-4 h-4" /> },
         ],
-        footerNav: [],
+        footerNav: [
+          { href: '/patient/settings', label: 'Account Settings', icon: <Settings className="w-4 h-4" /> },
+          { href: '/patient', label: 'Switch to Patient View', icon: <User className="w-4 h-4" /> },
+        ],
       };
     case 'admin':
       return {
@@ -159,36 +167,48 @@ export function Sidebar({ role }: { role?: SystemRole | string }) {
   const resolvedRole = getResolvedRole();
   const config = getSidebarConfig(resolvedRole);
   const isDoctor = resolvedRole === 'doctor' || pathname.startsWith('/doctor');
+  const isResearcher = resolvedRole === 'researcher' || pathname.startsWith('/researcher');
 
   return (
     <aside className={cn(
       "flex flex-col transition-all duration-300 select-none",
       isDoctor 
         ? "bg-white text-slate-800 border-r border-slate-200/80 shadow-xs" 
-        : "bg-card text-card-foreground border-r border-border",
+        : isResearcher
+          ? "bg-white text-zinc-900 border-r border-zinc-200/80 shadow-xs"
+          : "bg-card text-card-foreground border-r border-border",
       isOpen ? "w-64" : "w-16"
     )}>
       {/* Brand Header */}
       <div className={cn(
         "h-14 flex items-center px-4 shrink-0 justify-between border-b",
-        isDoctor ? "border-slate-200/80" : "border-border"
+        isDoctor ? "border-slate-200/80" : isResearcher ? "border-zinc-200/80" : "border-border"
       )}>
         <div className="flex items-center gap-3 overflow-hidden">
           <div className={cn(
             "p-1.5 rounded-xl shrink-0 border",
             isDoctor 
               ? "bg-teal-50 text-teal-600 border-teal-200/70 shadow-2xs" 
-              : "bg-primary/10 text-primary border-primary/20"
+              : isResearcher
+                ? "bg-indigo-50 text-indigo-600 border-indigo-200/70 shadow-2xs"
+                : "bg-primary/10 text-primary border-primary/20"
           )}>
-            <HeartPulse className="w-5 h-5" />
+            {isResearcher ? <FlaskConical className="w-5 h-5" /> : <HeartPulse className="w-5 h-5" />}
           </div>
           {isOpen && (
-            <span className={cn(
-              "font-bold text-lg tracking-tight truncate",
-              isDoctor ? "text-slate-900" : "text-foreground"
-            )}>
-              Healer
-            </span>
+            <div className="flex flex-col min-w-0">
+              <span className={cn(
+                "font-bold text-lg tracking-tight truncate leading-tight",
+                isDoctor ? "text-slate-900" : isResearcher ? "text-zinc-900" : "text-foreground"
+              )}>
+                Healer
+              </span>
+              {isResearcher && (
+                <span className="text-[10px] font-semibold text-indigo-600 tracking-wider uppercase">
+                  Research Lab
+                </span>
+              )}
+            </div>
           )}
         </div>
       </div>
@@ -254,7 +274,11 @@ export function Sidebar({ role }: { role?: SystemRole | string }) {
       {config.footerNav && config.footerNav.length > 0 && (
         <div className={cn(
           "p-3 border-t shrink-0 space-y-1",
-          isDoctor ? "bg-slate-50/80 border-slate-200/80" : "bg-muted/20 border-border"
+          isDoctor 
+            ? "bg-slate-50/80 border-slate-200/80" 
+            : isResearcher
+              ? "bg-zinc-50/80 border-zinc-200/80"
+              : "bg-muted/20 border-border"
         )}>
           {config.footerNav.map((item) => (
             <SidebarNavLink 
