@@ -6,6 +6,8 @@ import {
   doctorProfiles,
   patientProfiles,
   doctorReviews,
+  sessionNotes,
+  prescriptions,
   eq,
   desc,
   and,
@@ -335,7 +337,19 @@ export const AppointmentsService = {
 
     if (!isParticipant) return null;
 
-    return appointment;
+    const notes = await db.query.sessionNotes.findMany({
+      where: eq(sessionNotes.appointmentId, id),
+    });
+
+    const rx = await db.query.prescriptions.findMany({
+      where: eq(prescriptions.appointmentId, id),
+    });
+
+    return {
+      ...appointment,
+      sessionNotes: notes,
+      prescriptions: rx,
+    };
   },
 
   async cancelAppointment(id: string, patientUserId: string) {

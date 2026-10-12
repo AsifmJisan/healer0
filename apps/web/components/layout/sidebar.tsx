@@ -37,8 +37,7 @@ export const getSidebarConfig = (role?: SystemRole | string): RoleSidebarConfig 
           { href: '/doctor/patients', label: 'Patient Records', icon: <Users className="w-4 h-4" /> },
         ],
         sessionsNav: [
-          { href: '/doctor/sessions/notes', label: 'Session Notes', icon: <FileText className="w-4 h-4" /> },
-          { href: '/doctor/sessions/prescriptions', label: 'Prescriptions', icon: <Pill className="w-4 h-4" /> },
+          { href: '/doctor/sessions', label: 'Sessions', icon: <ClipboardList className="w-4 h-4" /> },
         ],
         footerNav: [
           { href: '/doctor/profile', label: 'Doctor Profile', icon: <UserCheck className="w-4 h-4" /> },

@@ -59,6 +59,10 @@ export function fetchAppointments(status?: string) {
   return apiFetch<{ data: any[] }>(`/appointments${query}`);
 }
 
+export function fetchAppointmentById(id: string) {
+  return apiFetch<any>(`/appointments/${id}`);
+}
+
 export function updateAppointmentStatus(id: string, status: string) {
   return apiFetch<{ data: any }>(`/appointments/${id}/status`, {
     method: 'PATCH',
@@ -82,6 +86,10 @@ export function updateCounselingStatus(id: string, status: string, notes?: strin
 export function fetchPatientRecords(risk?: string) {
   const query = risk ? `?risk=${risk}` : '';
   return apiFetch<{ data: any[] }>(`/patients${query}`);
+}
+
+export function fetchPatientDetails(id: string) {
+  return apiFetch<{ data: any }>(`/patients/${id}/details`);
 }
 
 export function updatePatientRisk(id: string, riskLevel: string, notes?: string) {

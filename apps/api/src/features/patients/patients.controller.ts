@@ -2,6 +2,7 @@ import type { Context } from 'hono';
 import type { AuthVariables } from '../../infra/middleware/auth';
 import { 
   getDoctorPatientRecordsService, 
+  getPatientDetailService,
   updatePatientRiskLevelService, 
   PatientsService 
 } from './patients.service';
@@ -13,6 +14,15 @@ export async function getDoctorPatientsHandler(c: Context) {
   const risk = c.req.query('risk');
   const records = await getDoctorPatientRecordsService(user.id, risk);
   return c.json({ data: records });
+}
+
+export async function getPatientDetailHandler(c: Context) {
+  const user = c.get('user');
+  if (!user?.id) throw new Error('Unauthorized');
+  const id = c.req.param('id');
+  if (!id) throw new Error('Record ID is required');
+  const details = await getPatientDetailService(user.id, id);
+  return c.json({ data: details });
 }
 
 export async function updatePatientRiskHandler(c: Context) {

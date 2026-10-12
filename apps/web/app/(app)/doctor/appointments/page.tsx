@@ -27,7 +27,7 @@ export default function AppointmentsPage() {
 
   const { data, isLoading } = useQuery({
     queryKey: ['appointments', activeTab],
-    queryFn: () => fetchAppointments(activeTab === 'all' ? undefined : activeTab),
+    queryFn: () => fetchAppointments(activeTab),
   });
 
   const mutation = useMutation({

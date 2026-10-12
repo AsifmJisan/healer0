@@ -6,6 +6,7 @@ import {
 import type { AuthVariables } from '../../infra/middleware/auth';
 import { 
   getDoctorPatientsHandler, 
+  getPatientDetailHandler,
   updatePatientRiskHandler, 
   PatientsController 
 } from './patients.controller';
@@ -22,6 +23,7 @@ patientsRouter.get('/', async (c) => {
   return getDoctorPatientsHandler(c);
 });
 
+patientsRouter.get('/:id/details', getPatientDetailHandler);
 patientsRouter.patch('/:id/risk', updatePatientRiskHandler);
 
 export { patientsRouter };

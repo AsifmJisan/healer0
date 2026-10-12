@@ -1,6 +1,7 @@
 import { 
   db, users, doctorProfiles, doctorSettings, doctorQualifications, 
-  doctorReviews, appointments, patientRecords, prescriptions, counselingSessions, eq, desc, count 
+  doctorReviews, appointments, patientRecords, prescriptions, counselingSessions, 
+  crisisEvents, patientProfiles, eq, desc, count 
 } from '@healer/db';
 
 export async function getDoctorProfileByUserId(userId: string) {
@@ -68,12 +69,28 @@ export async function getOverviewStats(userId: string) {
 
   const avgRating = reviews.length > 0 
     ? (reviews.reduce((acc, r) => acc + r.rating, 0) / reviews.length).toFixed(1)
-    : '5.0';
+    : null;
 
   const todayStr = new Date().toDateString();
   const todayAppointments = allAppointments.filter(a => new Date(a.appointmentDate).toDateString() === todayStr);
 
   const criticalPatients = allPatients.filter(p => p.riskLevel === 'Critical' || p.riskLevel === 'High');
+
+  // Crisis events for doctor's patients
+  const rawEvents = await db.query.crisisEvents.findMany({
+    orderBy: [desc(crisisEvents.createdAt)],
+  });
+
+  const recentCrisisEvents = await Promise.all(
+    rawEvents.map(async (ev) => {
+      const user = await db.query.users.findFirst({ where: eq(users.id, ev.userId) });
+      return {
+        ...ev,
+        patientName: user?.name || 'Patient',
+        patientEmail: user?.email || '',
+      };
+    })
+  );
 
   return {
     todayAppointmentsCount: todayAppointments.length,
@@ -82,6 +99,7 @@ export async function getOverviewStats(userId: string) {
     avgRating,
     todayAppointments,
     criticalPatients,
+    recentCrisisEvents,
   };
 }
 
