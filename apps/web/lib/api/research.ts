@@ -43,6 +43,22 @@ export interface ResearchProject {
   updatedAt: string;
   participants?: ResearchParticipant[];
   surveys?: ResearchSurvey[];
+  dataCollection?: Array<{
+    id: string;
+    projectId: string;
+    participantId: string | null;
+    dataType: string;
+    dataValue: any;
+    collectedDate: string;
+  }>;
+  analytics?: Array<{
+    id: string;
+    projectId: string;
+    analysisType: string;
+    metricsSummary: any;
+    generatedReport: string | null;
+    createdAt: string;
+  }>;
 }
 
 export interface ResearchParticipant {
