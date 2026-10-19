@@ -88,10 +88,6 @@ export function fetchPatientRecords(risk?: string) {
   return apiFetch<{ data: any[] }>(`/patients${query}`);
 }
 
-export function fetchPatientDetails(id: string) {
-  return apiFetch<{ data: any }>(`/patients/${id}/details`);
-}
-
 export function updatePatientRisk(id: string, riskLevel: string, notes?: string) {
   return apiFetch<{ data: any }>(`/patients/${id}/risk`, {
     method: 'PATCH',

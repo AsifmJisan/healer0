@@ -3,7 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchDoctorOverview } from "@/lib/api/doctor";
 import { cn } from "@/lib/utils";
-import { Calendar, Pill, Users, Star, AlertTriangle, ShieldAlert, HeartPulse } from "lucide-react";
+import { Calendar, Pill, Users, Star, AlertTriangle } from "lucide-react";
 
 function StatCard({ label, value, icon, accent }: { label: string; value: string | number; icon: React.ReactNode; accent: string }) {
   return (
@@ -80,58 +80,24 @@ export default function DoctorDashboard() {
           accent="bg-teal-50"
         />
         <StatCard
+          label="Total Prescriptions"
+          value={stats?.pendingPrescriptionsCount ?? 0}
+          icon={<Pill className="w-5 h-5 text-indigo-600" />}
+          accent="bg-indigo-50"
+        />
+        <StatCard
           label="Active Patients"
           value={stats?.activePatientsCount ?? 0}
           icon={<Users className="w-5 h-5 text-sky-600" />}
           accent="bg-sky-50"
         />
         <StatCard
-          label="Crisis Events Flagged"
-          value={stats?.recentCrisisEvents?.length ?? 0}
-          icon={<ShieldAlert className="w-5 h-5 text-rose-600" />}
-          accent="bg-rose-50"
-        />
-        <StatCard
-          label="Rating"
+          label="Avg. Patient Rating"
           value={stats?.avgRating ? `${stats.avgRating} / 5` : 'N/A'}
           icon={<Star className="w-5 h-5 text-amber-500" />}
           accent="bg-amber-50"
         />
       </div>
-
-      {/* Emergency & Crisis Alert Banner if any active crisis */}
-      {stats?.recentCrisisEvents && stats.recentCrisisEvents.length > 0 && (
-        <div className="bg-rose-50 border border-rose-200 rounded-xl p-5 shadow-2xs space-y-3">
-          <div className="flex items-center gap-2 text-rose-800 font-bold text-base">
-            <ShieldAlert className="w-5 h-5 text-rose-600 animate-pulse" />
-            <h2>Emergency & Crisis Event Alerts ({stats.recentCrisisEvents.length})</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            {stats.recentCrisisEvents.map((ev: any) => (
-              <div key={ev.id} className="bg-white border border-rose-200/80 rounded-lg p-3.5 space-y-2">
-                <div className="flex items-start justify-between">
-                  <div>
-                    <p className="font-bold text-slate-900 text-sm">{ev.patientName}</p>
-                    <p className="text-xs text-rose-600 font-medium">{ev.detectedIssue}</p>
-                  </div>
-                  <span className="px-2 py-0.5 rounded text-[10px] font-extrabold uppercase bg-rose-100 text-rose-800 border border-rose-300">
-                    {ev.riskLevel || 'High'} Risk
-                  </span>
-                </div>
-                {ev.aiResponse && (
-                  <p className="text-xs text-slate-600 bg-slate-50 p-2 rounded border border-slate-100 italic">
-                    "{ev.aiResponse}"
-                  </p>
-                )}
-                <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1 border-t border-slate-100">
-                  <span>Contacted: {ev.emergencyContacted ? 'Yes' : 'No'}</span>
-                  <span>{new Date(ev.createdAt).toLocaleDateString()}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* Two Column Layout: Today's Schedule + High Risk Alerts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">

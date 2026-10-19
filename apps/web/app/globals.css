@@ -42,34 +42,17 @@
   --color-teal-700: #0f766e;
   --color-teal-800: #115e59;
 
-<<<<<<< Updated upstream
-  /* Researcher Dashboard Scientific Indigo Theme — explicit color families */
-  --color-indigo-50: #eef2ff;
-  --color-indigo-100: #e0e7ff;
-  --color-indigo-200: #c7d2fe;
-=======
   /* Researcher Dashboard Academic Palette Tokens */
   --color-indigo-50: #eef2ff;
   --color-indigo-100: #e0e7ff;
   --color-indigo-200: #c7d2fe;
   --color-indigo-300: #a5b4fc;
->>>>>>> Stashed changes
   --color-indigo-400: #818cf8;
   --color-indigo-500: #6366f1;
   --color-indigo-600: #4f46e5;
   --color-indigo-700: #4338ca;
   --color-indigo-800: #3730a3;
   --color-indigo-900: #312e81;
-<<<<<<< Updated upstream
-  --color-zinc-50: #fafafa;
-  --color-zinc-100: #f4f4f5;
-  --color-zinc-200: #e4e4e7;
-  --color-zinc-400: #a1a1aa;
-  --color-zinc-500: #71717a;
-  --color-zinc-700: #3f3f46;
-  --color-zinc-800: #27272a;
-  --color-zinc-900: #18181b;
-=======
   --color-indigo-950: #1e1b4b;
 
   --color-violet-50: #f5f3ff;
@@ -166,7 +149,6 @@
   --color-red-300: #fca5a5;
   --color-red-800: #991b1b;
   --color-red-950: #450a0a;
->>>>>>> Stashed changes
 
   /* Radius Math */
   --radius-sm: calc(var(--radius) * 0.6);
@@ -325,70 +307,12 @@
     background-color: #f8fafc !important;
   }
 
-<<<<<<< Updated upstream
-  /* Researcher Lab Theme — Deep Scientific Indigo
-     Distinct from patient (sage green) and doctor (teal) palettes.
-     Applied when navigating /researcher/* routes. */
-=======
   /* Academic Purple-Pinkish / Plum-Fuchsia Theme for Researcher Dashboard ONLY */
->>>>>>> Stashed changes
   .researcher-theme,
   .dark .researcher-theme,
   html.dark .researcher-theme,
   html.dark body .researcher-theme,
   [data-theme='dark'] .researcher-theme {
-<<<<<<< Updated upstream
-    --background: #fafafa !important;
-    --foreground: #18181b !important;
-
-    --card: #ffffff !important;
-    --card-foreground: #18181b !important;
-
-    --popover: #ffffff !important;
-    --popover-foreground: #18181b !important;
-
-    --primary: #4f46e5 !important;
-    --primary-foreground: #ffffff !important;
-
-    --secondary: #f4f4f5 !important;
-    --secondary-foreground: #3f3f46 !important;
-
-    --muted: #f4f4f5 !important;
-    --muted-foreground: #71717a !important;
-
-    --accent: #eef2ff !important;
-    --accent-foreground: #4338ca !important;
-
-    --destructive: #ef4444 !important;
-    --destructive-foreground: #ffffff !important;
-
-    --border: #e4e4e7 !important;
-    --input: #e4e4e7 !important;
-    --ring: #4f46e5 !important;
-
-    --color-background: #fafafa !important;
-    --color-foreground: #18181b !important;
-    --color-card: #ffffff !important;
-    --color-card-foreground: #18181b !important;
-    --color-popover: #ffffff !important;
-    --color-popover-foreground: #18181b !important;
-    --color-primary: #4f46e5 !important;
-    --color-primary-foreground: #ffffff !important;
-    --color-secondary: #f4f4f5 !important;
-    --color-secondary-foreground: #3f3f46 !important;
-    --color-muted: #f4f4f5 !important;
-    --color-muted-foreground: #71717a !important;
-    --color-accent: #eef2ff !important;
-    --color-accent-foreground: #4338ca !important;
-    --color-destructive: #ef4444 !important;
-    --color-destructive-foreground: #ffffff !important;
-    --color-border: #e4e4e7 !important;
-    --color-input: #e4e4e7 !important;
-    --color-ring: #4f46e5 !important;
-
-    color: #18181b !important;
-    background-color: #fafafa !important;
-=======
     --background: #fdf4ff !important;
     --foreground: #4a044e !important;
     
@@ -439,6 +363,8 @@
     
     color: #4a044e !important;
     background-color: #fdf4ff !important;
->>>>>>> Stashed changes
   }
 }
+
+
+

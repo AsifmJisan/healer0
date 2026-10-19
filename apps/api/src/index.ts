@@ -19,11 +19,7 @@ import { emergencyRouter } from './features/emergency/emergency.route';
 import { communityRouter } from './features/community/community.route';
 import { privacyRouter } from './features/privacy/privacy.route';
 import { accountRouter } from './features/account/account.route';
-<<<<<<< Updated upstream
-import { researchRouter } from './features/research/research.route';
-=======
 import { researcherRouter } from './features/researcher/researcher.route';
->>>>>>> Stashed changes
 
 const app = new Hono().basePath('/api');
 
@@ -65,8 +61,5 @@ app.route('/emergency', emergencyRouter);
 app.route('/community', communityRouter);
 app.route('/privacy', privacyRouter);
 app.route('/account', accountRouter);
-
-// Research features (Researcher dashboard)
-app.route('/research', researchRouter);
 
 export default app;

@@ -32,13 +32,8 @@ export function SidebarNavLink({ href, icon, label, isCollapsed, isSubItem }: Si
             : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
           : isResearcherRoute
             ? isActive
-<<<<<<< Updated upstream
-              ? "bg-indigo-50/90 text-indigo-900 font-semibold shadow-xs"
-              : "text-zinc-600 hover:bg-zinc-100/80 hover:text-zinc-900"
-=======
               ? "bg-fuchsia-50 text-fuchsia-950 font-semibold shadow-xs border border-fuchsia-200/80"
               : "text-slate-600 hover:bg-fuchsia-50/70 hover:text-fuchsia-950"
->>>>>>> Stashed changes
             : isActive
               ? "bg-secondary text-secondary-foreground font-semibold"
               : "text-muted-foreground hover:bg-muted hover:text-foreground",
@@ -49,11 +44,7 @@ export function SidebarNavLink({ href, icon, label, isCollapsed, isSubItem }: Si
       {isActive && (
         <span className={cn(
           "absolute left-0 top-2 bottom-2 w-1 rounded-r-full shadow-xs",
-<<<<<<< Updated upstream
-          isDoctorRoute ? "bg-teal-600" : isResearcherRoute ? "bg-indigo-600" : "bg-primary"
-=======
           isDoctorRoute ? "bg-teal-600" : isResearcherRoute ? "bg-fuchsia-600" : "bg-primary"
->>>>>>> Stashed changes
         )} />
       )}
       <span className={cn(
@@ -61,11 +52,7 @@ export function SidebarNavLink({ href, icon, label, isCollapsed, isSubItem }: Si
         isDoctorRoute
           ? isActive ? "text-teal-600" : "text-slate-400 group-hover:text-slate-700"
           : isResearcherRoute
-<<<<<<< Updated upstream
-            ? isActive ? "text-indigo-600" : "text-zinc-400 group-hover:text-zinc-700"
-=======
             ? isActive ? "text-fuchsia-600" : "text-slate-400 group-hover:text-fuchsia-600"
->>>>>>> Stashed changes
             : isActive ? "text-primary" : "text-muted-foreground group-hover:text-foreground"
       )}>
         {icon}
