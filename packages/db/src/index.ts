@@ -10,7 +10,11 @@ export * from './schema/community';
 export * from './schema/privacy';
 export * from './schema/consultations';
 export * from './schema/doctor';
+<<<<<<< Updated upstream
 export * from './schema/research';
+=======
+export * from './schema/researcher';
+>>>>>>> Stashed changes
 export * from 'drizzle-orm';
 
 import { drizzle } from 'drizzle-orm/postgres-js';
@@ -27,7 +31,11 @@ import * as communitySchema from './schema/community';
 import * as privacySchema from './schema/privacy';
 import * as consultationsSchema from './schema/consultations';
 import * as doctorSchema from './schema/doctor';
+<<<<<<< Updated upstream
 import * as researchSchema from './schema/research';
+=======
+import * as researcherSchema from './schema/researcher';
+>>>>>>> Stashed changes
 import * as dotenv from 'dotenv';
 import path from 'path';
 
@@ -51,6 +59,10 @@ export const db = drizzle(client, {
     ...privacySchema,
     ...consultationsSchema,
     ...doctorSchema,
+<<<<<<< Updated upstream
     ...researchSchema,
+=======
+    ...researcherSchema,
+>>>>>>> Stashed changes
   },
 });

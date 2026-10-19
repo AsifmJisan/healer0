@@ -19,7 +19,11 @@ import { emergencyRouter } from './features/emergency/emergency.route';
 import { communityRouter } from './features/community/community.route';
 import { privacyRouter } from './features/privacy/privacy.route';
 import { accountRouter } from './features/account/account.route';
+<<<<<<< Updated upstream
 import { researchRouter } from './features/research/research.route';
+=======
+import { researcherRouter } from './features/researcher/researcher.route';
+>>>>>>> Stashed changes
 
 const app = new Hono().basePath('/api');
 
@@ -44,6 +48,9 @@ app.route('/auth', authRouter);
 
 // Patients (Admin list + Doctor patient records)
 app.route('/patients', patientsRouter);
+
+// Researcher features
+app.route('/researcher', researcherRouter);
 
 // Shared features (Integrated for both Doctor & Patient)
 app.route('/appointments', appointmentsRouter);

@@ -40,12 +40,17 @@ export function AvatarDropdown({ user }: AvatarDropdownProps) {
   const profiles = authData?.profiles;
   const isDoctorView = pathname.startsWith('/doctor');
   const isResearcherView = pathname.startsWith('/researcher');
+<<<<<<< Updated upstream
   const hasResearcherAccess = Boolean(profiles?.isResearcher);
 
   // Eligible for two doctor/patient identities
   const isEligibleForTwoIdentities = Boolean(
     profiles?.isDoctor && (profiles?.isPatient || user?.role === 'user' || user?.role === 'patient')
   );
+=======
+
+  const currentRoleBadge = isResearcherView ? 'Researcher' : isDoctorView ? 'Doctor' : 'Patient';
+>>>>>>> Stashed changes
 
   return (
     <div className="relative" ref={ref}>
@@ -71,6 +76,7 @@ export function AvatarDropdown({ user }: AvatarDropdownProps) {
               <p className="font-semibold text-sm truncate text-foreground">
                 {user?.name || 'User'}
               </p>
+<<<<<<< Updated upstream
               {isResearcherView ? (
                 <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-indigo-50 text-indigo-700 border border-indigo-200 shrink-0">
                   Researcher
@@ -84,13 +90,18 @@ export function AvatarDropdown({ user }: AvatarDropdownProps) {
                   Patient
                 </span>
               ) : null}
+=======
+              <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full bg-primary/10 text-primary border border-primary/20 shrink-0">
+                {currentRoleBadge}
+              </span>
+>>>>>>> Stashed changes
             </div>
             <p className="text-xs text-muted-foreground truncate mt-0.5">{user?.email}</p>
           </div>
           
           <div className="py-1">
             <Link 
-              href={isDoctorView ? "/doctor/profile" : "/patient/settings?tab=profile"}
+              href={isResearcherView ? "/researcher/settings" : isDoctorView ? "/doctor/profile" : "/patient/settings?tab=profile"}
               onClick={() => setOpen(false)}
               className="flex w-full items-center px-4 py-2 text-sm hover:bg-muted text-foreground transition-colors cursor-pointer"
             >
@@ -116,6 +127,7 @@ export function AvatarDropdown({ user }: AvatarDropdownProps) {
               Privacy & Consent
             </Link>
 
+<<<<<<< Updated upstream
             {/* Switch to / from Researcher Dashboard */}
             {hasResearcherAccess && (
               isResearcherView ? (
@@ -147,20 +159,48 @@ export function AvatarDropdown({ user }: AvatarDropdownProps) {
 
             {/* Doctor / Patient Switch */}
             {isEligibleForTwoIdentities && !isResearcherView && (
+=======
+            {/* Switch to Researcher Dashboard */}
+            {profiles?.isResearcher && !isResearcherView && (
+>>>>>>> Stashed changes
               <Link 
-                href={isDoctorView ? "/patient" : "/doctor"}
+                href="/researcher"
                 onClick={() => setOpen(false)}
                 className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-muted text-foreground transition-colors cursor-pointer group"
               >
                 <div className="flex items-center min-w-0">
-                  {isDoctorView ? (
-                    <HeartPulse className="w-4 h-4 mr-2.5 text-primary group-hover:scale-110 transition-transform shrink-0" />
-                  ) : (
-                    <Stethoscope className="w-4 h-4 mr-2.5 text-primary group-hover:scale-110 transition-transform shrink-0" />
-                  )}
-                  <span className="truncate font-medium">
-                    {isDoctorView ? "Switch to Patient Dashboard" : "Switch to Doctor Dashboard"}
-                  </span>
+                  <FlaskConical className="w-4 h-4 mr-2.5 text-fuchsia-600 group-hover:scale-110 transition-transform shrink-0" />
+                  <span className="truncate font-medium">Switch to Researcher</span>
+                </div>
+                <ArrowLeftRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-fuchsia-600 transition-colors ml-2 shrink-0" />
+              </Link>
+            )}
+
+            {/* Switch to Doctor Dashboard */}
+            {profiles?.isDoctor && !isDoctorView && (
+              <Link 
+                href="/doctor"
+                onClick={() => setOpen(false)}
+                className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-muted text-foreground transition-colors cursor-pointer group"
+              >
+                <div className="flex items-center min-w-0">
+                  <Stethoscope className="w-4 h-4 mr-2.5 text-teal-600 group-hover:scale-110 transition-transform shrink-0" />
+                  <span className="truncate font-medium">Switch to Doctor</span>
+                </div>
+                <ArrowLeftRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-teal-600 transition-colors ml-2 shrink-0" />
+              </Link>
+            )}
+
+            {/* Switch to Patient Dashboard */}
+            {(isDoctorView || isResearcherView) && (
+              <Link 
+                href="/patient"
+                onClick={() => setOpen(false)}
+                className="flex w-full items-center justify-between px-4 py-2 text-sm hover:bg-muted text-foreground transition-colors cursor-pointer group"
+              >
+                <div className="flex items-center min-w-0">
+                  <HeartPulse className="w-4 h-4 mr-2.5 text-primary group-hover:scale-110 transition-transform shrink-0" />
+                  <span className="truncate font-medium">Switch to Patient</span>
                 </div>
                 <ArrowLeftRight className="w-3.5 h-3.5 text-muted-foreground group-hover:text-primary transition-colors ml-2 shrink-0" />
               </Link>

@@ -7,7 +7,11 @@ import {
   Users, Activity, Calendar, FileText, Settings, ShieldAlert, BookOpen, ShieldCheck, HeartPulse,
   LayoutDashboard, MessageSquare, Pill, UserCheck, User,
   Bot, Smile, Sparkles, ClipboardList, BookMarked, FolderHeart,
+<<<<<<< Updated upstream
   FlaskConical, BarChart3, Library
+=======
+  FlaskConical, Database, BarChart3, Share2, Stethoscope, Search, Layers
+>>>>>>> Stashed changes
 } from "lucide-react";
 import { SidebarNavLink } from "./sidebar-nav-link";
 import { SidebarNavFolder, SidebarNavFolderChild } from "./sidebar-nav-folder";
@@ -43,6 +47,7 @@ export const getSidebarConfig = (role?: SystemRole | string): RoleSidebarConfig 
         footerNav: [
           { href: '/doctor/profile', label: 'Doctor Profile', icon: <UserCheck className="w-4 h-4" /> },
           { href: '/doctor/settings', label: 'Settings', icon: <Settings className="w-4 h-4" /> },
+          { href: '/researcher', label: 'Researcher View', icon: <FlaskConical className="w-4 h-4" /> },
           { href: '/patient', label: 'Switch to Patient View', icon: <User className="w-4 h-4" /> },
         ],
       };
@@ -72,6 +77,7 @@ export const getSidebarConfig = (role?: SystemRole | string): RoleSidebarConfig 
           { href: '/patient/community', label: 'Anonymous Community', icon: <Users className="w-4 h-4" /> },
         ],
         footerNav: [
+          { href: '/researcher', label: 'Researcher View', icon: <FlaskConical className="w-4 h-4" /> },
           { href: '/patient/settings', label: 'Account Settings', icon: <Settings className="w-4 h-4" /> },
         ],
       };
@@ -79,6 +85,7 @@ export const getSidebarConfig = (role?: SystemRole | string): RoleSidebarConfig 
       return {
         mainNav: [
           { href: '/researcher', label: 'Overview', icon: <LayoutDashboard className="w-4 h-4" /> },
+<<<<<<< Updated upstream
           { href: '/researcher/studies', label: 'Clinical Studies', icon: <FlaskConical className="w-4 h-4" /> },
           { href: '/researcher/participants', label: 'Cohort Participants', icon: <Users className="w-4 h-4" /> },
           { href: '/researcher/surveys', label: 'Surveys & Instruments', icon: <ClipboardList className="w-4 h-4" /> },
@@ -88,6 +95,21 @@ export const getSidebarConfig = (role?: SystemRole | string): RoleSidebarConfig 
         footerNav: [
           { href: '/patient/settings', label: 'Account Settings', icon: <Settings className="w-4 h-4" /> },
           { href: '/patient', label: 'Switch to Patient View', icon: <User className="w-4 h-4" /> },
+=======
+          { href: '/researcher/projects', label: 'Projects & Studies', icon: <FlaskConical className="w-4 h-4" /> },
+          { href: '/researcher/participants', label: 'Participants & Screening', icon: <Users className="w-4 h-4" /> },
+          { href: '/researcher/surveys', label: 'Surveys & Instruments', icon: <ClipboardList className="w-4 h-4" /> },
+          { href: '/researcher/data', label: 'Data Collection', icon: <Database className="w-4 h-4" /> },
+          { href: '/researcher/analytics', label: 'Analytics & Insights', icon: <BarChart3 className="w-4 h-4" /> },
+          { href: '/researcher/literature', label: 'Literature & Papers', icon: <BookOpen className="w-4 h-4" /> },
+          { href: '/researcher/collaboration', label: 'Collaboration Network', icon: <Share2 className="w-4 h-4" /> },
+          { href: '/researcher/reports', label: 'Reports & Compliance', icon: <FileText className="w-4 h-4" /> },
+        ],
+        footerNav: [
+          { href: '/researcher/settings', label: 'Researcher Settings', icon: <Settings className="w-4 h-4" /> },
+          { href: '/patient', label: 'Switch to Patient View', icon: <User className="w-4 h-4" /> },
+          { href: '/doctor', label: 'Switch to Doctor View', icon: <Stethoscope className="w-4 h-4" /> },
+>>>>>>> Stashed changes
         ],
       };
     case 'admin':
@@ -175,14 +197,22 @@ export function Sidebar({ role }: { role?: SystemRole | string }) {
       isDoctor 
         ? "bg-white text-slate-800 border-r border-slate-200/80 shadow-xs" 
         : isResearcher
+<<<<<<< Updated upstream
           ? "bg-white text-zinc-900 border-r border-zinc-200/80 shadow-xs"
+=======
+          ? "bg-white text-[#4a044e] border-r border-fuchsia-100 shadow-xs"
+>>>>>>> Stashed changes
           : "bg-card text-card-foreground border-r border-border",
       isOpen ? "w-64" : "w-16"
     )}>
       {/* Brand Header */}
       <div className={cn(
         "h-14 flex items-center px-4 shrink-0 justify-between border-b",
+<<<<<<< Updated upstream
         isDoctor ? "border-slate-200/80" : isResearcher ? "border-zinc-200/80" : "border-border"
+=======
+        isDoctor ? "border-slate-200/80" : isResearcher ? "border-fuchsia-100" : "border-border"
+>>>>>>> Stashed changes
       )}>
         <div className="flex items-center gap-3 overflow-hidden">
           <div className={cn(
@@ -190,22 +220,38 @@ export function Sidebar({ role }: { role?: SystemRole | string }) {
             isDoctor 
               ? "bg-teal-50 text-teal-600 border-teal-200/70 shadow-2xs" 
               : isResearcher
+<<<<<<< Updated upstream
                 ? "bg-indigo-50 text-indigo-600 border-indigo-200/70 shadow-2xs"
+=======
+                ? "bg-fuchsia-50 text-fuchsia-600 border-fuchsia-200/80 shadow-2xs"
+>>>>>>> Stashed changes
                 : "bg-primary/10 text-primary border-primary/20"
           )}>
             {isResearcher ? <FlaskConical className="w-5 h-5" /> : <HeartPulse className="w-5 h-5" />}
           </div>
           {isOpen && (
+<<<<<<< Updated upstream
             <div className="flex flex-col min-w-0">
               <span className={cn(
                 "font-bold text-lg tracking-tight truncate leading-tight",
                 isDoctor ? "text-slate-900" : isResearcher ? "text-zinc-900" : "text-foreground"
+=======
+            <div className="flex items-center gap-2 overflow-hidden">
+              <span className={cn(
+                "font-bold text-lg tracking-tight truncate",
+                isDoctor ? "text-slate-900" : isResearcher ? "text-[#4a044e]" : "text-foreground"
+>>>>>>> Stashed changes
               )}>
                 Healer
               </span>
               {isResearcher && (
+<<<<<<< Updated upstream
                 <span className="text-[10px] font-semibold text-indigo-600 tracking-wider uppercase">
                   Research Lab
+=======
+                <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-md bg-fuchsia-50 text-fuchsia-700 tracking-wider uppercase border border-fuchsia-200/80">
+                  Research
+>>>>>>> Stashed changes
                 </span>
               )}
             </div>

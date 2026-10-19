@@ -36,19 +36,31 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     <div className={cn(
       "flex h-screen bg-background text-foreground overflow-hidden",
       isDoctor && "doctor-theme bg-slate-50 text-slate-900",
+<<<<<<< Updated upstream
       isResearcher && "researcher-theme bg-zinc-50/50 text-zinc-900"
+=======
+      isResearcher && "researcher-theme bg-[#fdf4ff] text-[#4a044e]"
+>>>>>>> Stashed changes
     )}>
       <Sidebar role={mappedRole} />
       <div className={cn(
         "flex flex-col flex-1 min-w-0 bg-background text-foreground",
         isDoctor && "bg-slate-50 text-slate-900",
+<<<<<<< Updated upstream
         isResearcher && "bg-zinc-50/50 text-zinc-900"
+=======
+        isResearcher && "bg-[#fdf4ff] text-[#4a044e]"
+>>>>>>> Stashed changes
       )}>
         <Topbar user={session.user} />
         <main className={cn(
           "flex-1 overflow-auto p-6 bg-background text-foreground",
           isDoctor && "bg-slate-50 text-slate-900",
+<<<<<<< Updated upstream
           isResearcher && "bg-zinc-50/50 text-zinc-900"
+=======
+          isResearcher && "bg-[#fdf4ff] text-[#4a044e]"
+>>>>>>> Stashed changes
         )}>
           {children}
         </main>
